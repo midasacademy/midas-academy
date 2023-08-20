@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching Institute Admin Dashboard</title>
+    <link rel="stylesheet" href="../stylesheets/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+            <img src="../images/logo.png" alt="">
+
+            <div id="links">
+                <a class="link" href="/home">
+                    <i class="ri-home-5-fill"></i>
+                    Home
+                </a>
+                <a class="link" href="/add-stud">
+                    <i class="ri-user-add-fill"></i>
+                    New Student
+                </a>
+                <a class="link" href="">
+                    <i class="ri-edit-fill"></i>
+                    Manage Student
+                </a>
+                <a class="link" href="/fee">
+                    <i class="ri-cash-line"></i>
+                    Fee Management
+                </a>
+                <a class="link" href="/course">
+                    <i class="ri-book-line"></i>
+                    Course Management
+                </a>
+            </div>
+
+            <div id="settings">
+                <a href="" id="set">
+                    <i class="ri-settings-3-fill"></i>
+                    Settings
+                </a>
+                <a id="log-out" href="/"><i class="ri-shut-down-line"></i>Logout</a>
+            </div>
+        </div>
+
+        <div id="right">
+            <div style="display: flex; flex-direction: column;" class="dashboard">
+                <div class="students">
+                    <h2>Student Information</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Reg. No.</th>
+                                <th>Name</th>
+                                <th>Batch</th>
+                                <th>Fee Paid</th>
+                                <th>Total Fee</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% allusers.forEach(function(user){ %>
+                                <tr>
+                                    <td><%= user.__v %></td>
+                                    <td><%= user.name %></td>
+                                    <td><%= user.batch %></td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                    <td><button>Edit</button></td>
+                                </tr>
+                            <% }) %>
+                            
+                            <!-- Add more rows for other students -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

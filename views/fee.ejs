@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching Institute Admin Dashboard</title>
+    <link rel="stylesheet" href="../stylesheets/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        #left #links .link:nth-child(1) {
+            color: #00000085;
+        }
+
+        #left #links .link:nth-child(4) {
+            color: #000;
+        }
+
+        #left #links .link:nth-child(5) {
+            color: #00000085;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+            <img src="../images/logo.png" alt="">
+
+            <div id="links">
+                <a class="link" href="/home">
+                    <i class="ri-home-5-fill"></i>
+                    Home
+                </a>
+                <a class="link" href="/add-stud">
+                    <i class="ri-user-add-fill"></i>
+                    New Student
+                </a>
+                <a class="link" href="">
+                    <i class="ri-edit-fill"></i>
+                    Manage Student
+                </a>
+                <a class="link" href="/fee">
+                    <i class="ri-cash-line"></i>
+                    Fee Management
+                </a>
+                <a class="link" href="/course">
+                    <i class="ri-book-line"></i>
+                    Course Management
+                </a>
+            </div>
+
+            <div id="settings">
+                <a href="" id="set">
+                    <i class="ri-settings-3-fill"></i>
+                    Settings
+                </a>
+                <a id="log-out" href="/"><i class="ri-shut-down-line"></i>Logout</a>
+            </div>
+        </div>
+
+        <div id="right">
+            <div style="display: flex; flex-direction: column;" class="dashboard">
+                <div class="fees">
+                    <h2>Fee Management</h2>
+                    <form action="/feesubmit">
+                        <label for="student">Select Student:</label>
+                        <select id="student" name="student">
+                            <% users.forEach(function(user){ %>
+                                <option value="<%= user.name %>"><%= user.name %></option>
+                            <% }) %>
+                        </select>
+                        <label for="fee_amount">Fee Amount:</label>
+                        <input type="number" id="fee_amount" name="fee_amount" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

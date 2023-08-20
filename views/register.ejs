@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/register.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div style="position: relative;" class="registration-form">
+        <a href="/home"><i style="width: 20px; height: 20px; cursor: pointer; background-color: salmon; border-radius: 50%; font-size: 1.3vw; position: absolute; top: 2%; right: 4%; color: #000;" class="ri-close-line"></i></a>
+        <h2>Student Registration</h2>
+        <form action="/register" method="post">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="f_name">Father's Name:</label>
+            <input type="text" id="f_name" name="f_name" required>
+
+            <label for="f_phone">Father's Contact:</label>
+            <input type="tel" id="f_phone" name="f_phone" required>
+
+            <label for="course">Select Course:</label>
+            <select id="course" name="course" required>
+                <option value="" disabled selected>Select Course</option>
+                <% courses.forEach(function(course){ %>
+                    <option value="<%= course.course_name %>"><%= course.course_name %></option>
+                <% }) %>
+                <!-- Add more course options as needed -->
+            </select>
+
+            <label for="batch">Batch Name:</label>
+            <input type="text" id="batch" name="batch">
+
+            <label for="edu">Education:</label>
+            <input type="text" id="edu" name="edu">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
