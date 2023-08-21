@@ -12,56 +12,56 @@ require('dotenv').config();
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index');
+router.get('/', function (req, res, next) {
+  res.render('index');
 });
 
-router.get('/home', function(req, res) {
-  studentModel.find().then(function(allusers){
-  courseModel.find().then(function(courses){
-res.render('dashboard', {allusers,courses});
-  })
-  })
-});
-
-router.get('/add-stud', function(req, res) {
-  courseModel.find().then(function(courses){
-    res.render('register', {courses});
+router.get('/home', function (req, res) {
+  studentModel.find().then(function (allusers) {
+    courseModel.find().then(function (courses) {
+      res.render('dashboard', { allusers, courses });
+    })
   })
 });
 
-router.get('/fee', function(req, res) {
-  studentModel.find().then(function(users){
-    res.render('fee', {users});
+router.get('/add-stud', function (req, res) {
+  courseModel.find().then(function (courses) {
+    res.render('register', { courses });
   })
 });
 
-router.get('/course', function(req, res) {
-  courseModel.find().then(function(courses){
-    res.render('course', {courses});
+router.get('/fee', function (req, res) {
+  studentModel.find().then(function (users) {
+    res.render('fee', { users });
   })
 });
 
-router.post('/add_course', function(req, res){
+router.get('/course', function (req, res) {
+  courseModel.find().then(function (courses) {
+    res.render('course', { courses });
+  })
+});
+
+router.post('/add_course', function (req, res) {
   courseModel.create({
     course_name: req.body.course_name,
     course_fees: req.body.fees_one,
     course_fees_installment: req.body.fees_two
-  }).then(function(){
+  }).then(function () {
     res.redirect("/course");
   })
 })
 
 
-router.post('/adminlogin', function(req, res, next) {
-  if(req.body.name === process.env['name'] && req.body.password === process.env['password']){
+router.post('/adminlogin', function (req, res, next) {
+  if (req.body.name === process.env['name'] && req.body.password === process.env['password']) {
     res.redirect('home');
-  }else{
+  } else {
     res.redirect('back')
   }
 });
 
-router.post('/register', function(req, res){
+router.post('/register', function (req, res) {
   userModel.create({
     name: req.body.name,
     email: req.body.email,
@@ -72,7 +72,7 @@ router.post('/register', function(req, res){
     course: req.body.course,
     batch: req.body.batch,
     education: req.body.edu
-  }).then(function(newuser){
+  }).then(function (newuser) {
     res.redirect('/home')
   })
 })
