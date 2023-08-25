@@ -5,18 +5,59 @@ var studentModel = require('./student');
 var courseModel = require('./course');
 const passport = require('passport');
 
-// const localStrategy = require('passport-local');
-// passport.use(new localStrategy(userModel.authenticate()));
+const localStrategy = require('passport-local');
+passport.use(new localStrategy(userModel.authenticate()));
 
 require('dotenv').config();
 
 
-/* GET home page. */
+/*----------------- login page. ------------------------*/
 router.get('/', function (req, res, next) {
   res.render('index');
 });
 
-router.get('/home', function (req, res) {
+
+
+//-------------------- admin login START (passport) -------------------------
+router.get('/registeradmin', function (req, res) {
+  var newUser = new userModel({
+    username: 'admin',
+  });
+  userModel.register(newUser, 'admin').then(function (createdUser) {
+    passport.authenticate('local')(req, res, function () {
+      res.redirect('/home');
+    });
+  });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/home',
+  failureRedirect: '/'
+}), function (req, res, next) { });
+
+router.get('/logout', function (req, res, next) {
+  req.logout(function (err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
+// middleware
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  else {
+    res.redirect('/');
+  }
+};
+// ------------------- admin login END------------------------------
+
+
+
+
+// ------------------ home page (dashboard) -----------------------------------
+router.get('/home', isLoggedIn, function (req, res) {
   studentModel.find().then(function (allusers) {
     courseModel.find().then(function (courses) {
       res.render('dashboard', { allusers, courses });
@@ -24,25 +65,25 @@ router.get('/home', function (req, res) {
   })
 });
 
-router.get('/add-stud', function (req, res) {
+router.get('/add-stud', isLoggedIn, function (req, res) {
   courseModel.find().then(function (courses) {
     res.render('register', { courses });
   })
 });
 
-router.get('/fee', function (req, res) {
+router.get('/fee', isLoggedIn, function (req, res) {
   studentModel.find().then(function (users) {
     res.render('fee', { users });
   })
 });
 
-router.get('/course', function (req, res) {
+router.get('/course', isLoggedIn, function (req, res) {
   courseModel.find().then(function (courses) {
     res.render('course', { courses });
   })
 });
 
-router.post('/add_course', function (req, res) {
+router.post('/add_course', isLoggedIn, function (req, res) {
   courseModel.create({
     course_name: req.body.course_name,
     course_fees: req.body.fees_one,
@@ -52,31 +93,49 @@ router.post('/add_course', function (req, res) {
   })
 })
 
-
-router.post('/adminlogin', function (req, res, next) {
-  if (req.body.name === process.env['name'] && req.body.password === process.env['password']) {
-    res.redirect('home');
-  } else {
-    res.redirect('back')
-  }
-});
-
-router.post('/register', function (req, res) {
-  userModel.create({
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address,
-    f_name: req.body.f_name,
-    f_contact: req.body.f_phone,
-    course: req.body.course,
-    batch: req.body.batch,
-    education: req.body.edu
-  }).then(function (newuser) {
-    res.redirect('/home')
+router.post('/register', isLoggedIn, function (req, res) {
+  courseModel.findOne({ course_name: req.body.course }).then(function (course) {
+    var fees;
+    if(req.body.fee === 'complete'){
+      fees = course.course_fees;
+    }else{
+      fees = course.course_fees_installment;
+    }
+    studentModel.create({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      address: req.body.address,
+      f_name: req.body.f_name,
+      f_contact: req.body.f_phone,
+      course: req.body.course,
+      batch: req.body.batch,
+      education: req.body.edu,
+      total_fees: fees,
+      due_fees: fees
+    }).then(function (newuser) {
+      newuser.course_id.push(course._id)
+      newuser.save().then(function(){
+        course.user_id.push(newuser._id)
+        course.save().then(function(){
+          res.redirect('/home')
+        })
+      })
+    })
   })
 })
 
+
+router.post('/feesubmit', isLoggedIn, function(req, res){
+  studentModel.findOne({name: req.body.student}).then(function(stud){
+    var fee = Number(req.body.fee_amount);
+    stud.paid_fees = stud.paid_fees + fee;
+    stud.due_fees = stud.due_fees - fee;
+    stud.save().then(function(){
+      res.redirect('/home');
+    })
+  })
+})
 
 
 module.exports = router;

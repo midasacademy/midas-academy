@@ -55,7 +55,7 @@
                     <i class="ri-settings-3-fill"></i>
                     Settings
                 </a>
-                <a id="log-out" href="/"><i class="ri-shut-down-line"></i>Logout</a>
+                <a id="log-out" href="/logout"><i class="ri-shut-down-line"></i>Logout</a>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
             <div style="display: flex; flex-direction: column;" class="dashboard">
                 <div class="fees">
                     <h2>Fee Management</h2>
-                    <form action="/feesubmit">
+                    <form action="/feesubmit" method="post">
                         <label for="student">Select Student:</label>
                         <select id="student" name="student">
                             <% users.forEach(function(user){ %>

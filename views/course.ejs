@@ -45,7 +45,7 @@
                     <i class="ri-cash-line"></i>
                     Fee Management
                 </a>
-                <a class="link" href="/courses">
+                <a class="link" href="/course">
                     <i class="ri-book-line"></i>
                     Course Management
                 </a>
@@ -56,7 +56,7 @@
                     <i class="ri-settings-3-fill"></i>
                     Settings
                 </a>
-                <a id="log-out" href="/"><i class="ri-shut-down-line"></i>Logout</a>
+                <a id="log-out" href="/logout"><i class="ri-shut-down-line"></i>Logout</a>
             </div>
         </div>
 
@@ -78,7 +78,10 @@
                                     <td><%= course.course_name %></td>
                                     <td><%= course.course_fees %></td>
                                     <td><%= course.course_fees_installment %></td>
-                                    <td><button>Edit</button></td>
+                                    <td>
+                                        <button>✏️ Edit</button>
+                                        <button style="background-color: red;">🗑️ Delete</button>
+                                    </td>
                                 </tr>
                             <% }) %>
                             <!-- Add more rows for other students -->
