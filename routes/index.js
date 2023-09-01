@@ -4,6 +4,7 @@ var userModel = require('./users');
 var studentModel = require('./student');
 var courseModel = require('./course');
 const passport = require('passport');
+var alert = require('alert')
 
 const localStrategy = require('passport-local');
 passport.use(new localStrategy(userModel.authenticate()));
@@ -83,6 +84,11 @@ router.get('/course', isLoggedIn, function (req, res) {
   })
 });
 
+router.get('/receipt', isLoggedIn, function (req, res) {
+  res.render('receipt');
+});
+
+
 router.post('/add_course', isLoggedIn, function (req, res) {
   courseModel.create({
     course_name: req.body.course_name,
@@ -101,6 +107,7 @@ router.post('/register', isLoggedIn, function (req, res) {
     }else{
       fees = course.course_fees_installment;
     }
+    
     studentModel.create({
       name: req.body.name,
       email: req.body.email,
@@ -129,11 +136,16 @@ router.post('/register', isLoggedIn, function (req, res) {
 router.post('/feesubmit', isLoggedIn, function(req, res){
   studentModel.findOne({name: req.body.student}).then(function(stud){
     var fee = Number(req.body.fee_amount);
-    stud.paid_fees = stud.paid_fees + fee;
-    stud.due_fees = stud.due_fees - fee;
-    stud.save().then(function(){
-      res.redirect('/home');
-    })
+    if((stud.paid_fees+fee) <= stud.total_fees){
+      stud.paid_fees = stud.paid_fees + fee;
+      stud.due_fees = stud.due_fees - fee;
+      stud.save().then(function(){
+        res.redirect('/receipt');
+      })
+    }else{
+      alert('Amount Exceed fees limit !')
+      res.redirect('back')
+    }
   })
 })
 
