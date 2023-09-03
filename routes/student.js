@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var studentSchema = mongoose.Schema({
+    reg_no: Number,
     name: String,
     email: String,
     phone: Number,
@@ -20,7 +21,8 @@ var studentSchema = mongoose.Schema({
         default: 0
     },
     due_fees: Number,
-    instalment: String
+    instalment: String,
+    admission_date: String
 })
 
 module.exports = mongoose.model("student", studentSchema);

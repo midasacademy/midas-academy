@@ -127,6 +127,7 @@ router.post('/register', isLoggedIn, function (req, res) {
     }
     
     studentModel.create({
+      reg_no: req.body.reg_no,
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
@@ -138,7 +139,8 @@ router.post('/register', isLoggedIn, function (req, res) {
       education: req.body.edu,
       total_fees: fees,
       due_fees: fees,
-      instalment: req.body.fee
+      instalment: req.body.fee,
+      admission_date: new Date().toLocaleDateString()
     }).then(function (newuser) {
       newuser.course_id.push(course._id)
       newuser.save().then(function(){
@@ -159,7 +161,8 @@ router.post('/feesubmit', isLoggedIn, function(req, res){
       stud.paid_fees = stud.paid_fees + fee;
       stud.due_fees = stud.due_fees - fee;
       stud.save().then(function(){
-        res.render('receipt', {stud, fee});
+        var date = new Date().toLocaleDateString(); 
+        res.render('receipt', {stud, fee, date});
       })
     }else{
       alert('Amount Exceed fees limit !')
