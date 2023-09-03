@@ -84,10 +84,14 @@ router.get('/course', isLoggedIn, function (req, res) {
   })
 });
 
-router.get('/receipt', isLoggedIn, function (req, res) {
-  res.render('receipt');
+router.get('/manage-student', isLoggedIn, function (req, res) {
+  res.render('student');
 });
 
+
+
+
+// ---------------------------- course management -------------------------------------
 
 router.post('/add_course', isLoggedIn, function (req, res) {
   courseModel.create({
@@ -99,10 +103,24 @@ router.post('/add_course', isLoggedIn, function (req, res) {
   })
 })
 
+router.get('/delete-course/:id', isLoggedIn, function(req, res){
+  courseModel.findByIdAndDelete({_id: req.params.id}).then(function(deletedCourse){
+    res.redirect('back');
+  })
+})
+
+
+
+// -------------------------------------------------------------------------------
+
+
+
+
+
 router.post('/register', isLoggedIn, function (req, res) {
   courseModel.findOne({ course_name: req.body.course }).then(function (course) {
     var fees;
-    if(req.body.fee === 'complete'){
+    if(req.body.fee === 'Complete'){
       fees = course.course_fees;
     }else{
       fees = course.course_fees_installment;
@@ -119,7 +137,8 @@ router.post('/register', isLoggedIn, function (req, res) {
       batch: req.body.batch,
       education: req.body.edu,
       total_fees: fees,
-      due_fees: fees
+      due_fees: fees,
+      instalment: req.body.fee
     }).then(function (newuser) {
       newuser.course_id.push(course._id)
       newuser.save().then(function(){
@@ -140,7 +159,7 @@ router.post('/feesubmit', isLoggedIn, function(req, res){
       stud.paid_fees = stud.paid_fees + fee;
       stud.due_fees = stud.due_fees - fee;
       stud.save().then(function(){
-        res.redirect('/receipt');
+        res.render('receipt', {stud, fee});
       })
     }else{
       alert('Amount Exceed fees limit !')

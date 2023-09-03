@@ -1,12 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt</title>
-    <link rel="stylesheet" href="receipt.ejs">
+    <link rel="stylesheet" href="../stylesheets/receipt.css">
 </head>
+
 <body>
-    <h1>Fee Receipt</h1>
+    <div id="main">
+        <div id="header">
+            <img id="logo" src="../images/logo.png" alt="">
+            <h1>Receipt</h1>
+        </div>
+        <div id="rec-dets">
+            <div id="rec-no">
+                <h4>Receipt Number</h4>
+                <h5>fams</h5>
+            </div>
+            <div id="rec-date">
+                <h4>Receipt Date</h4>
+                <h5>12-45-5116</h5>
+            </div>
+        </div>
+        <div id="stud-dets">
+            <p><b>Student Name</b> <%= stud.name %></p>
+            <p><b>Father's Name</b> <%= stud.f_name %></p>
+            <!-- <p><b>the sum of Rupees (in words)</b> </p> -->
+            <p><b>Mode of Payment</b> cash</p>
+            <p><b>Instalment</b> <%= stud.instalment === 'Complete' ? "complete" : "Two" %></p>
+            <p><b>Total Fee</b> ₹<%= stud.total_fees %></p>
+            <p><b>Due Fees</b> ₹<%= stud.due_fees %></p>
+            <p><b>Balance</b> ₹<%= stud.paid_fees %></p>
+            <p><b>Course</b> <%= stud.course %></p>
+            <div id="amount">
+                <h2 style="display: inline-block; border-bottom: 2px solid #00000080;" >Fee Received</h2>
+                <h3 style="font-weight: 900;">₹<%= fee %></h3>
+            </div>
+        </div>
+        <div id="tnc">
+            <h3>TERMS & CONDITION</h3>
+            <ol>
+                <li>Only 2 days demo is allowed after those fees must be submitted.</li>
+                <li>Fees shall not be refunded under any conditions.</li>
+                <li>Chewing tobacco or any toxic things is strictly prohibited.</li>
+                <li>Fees shall be paid in maximum 2 installments( monthly fees is strictly prohibited for new admission).</li>
+                <li>If fees is delayed / or fees is submitted after due date Rs 10 /day shall be charged along with the fees.</li>
+                <li>Monthly fees is acceptable only for former/ previous students / old students who have already paid fees and completed their course in the academy.</li>
+                <li>Collect ID card and receipt of the paid fees from the office ( responsibility of students/ parents)</li>
+                <li>If he/she has changed the class timing he/ she must inform the academy administration so that following changes can be done.</li>
+                <li>If he/ she has not completed his/ her syllabus during given time & 80% of attendance if not fulfilled academy shall not be held responsible to complete the syllubus.</li>
+                <li>If he/she has completed the course and still has doubt in class he/ she again want to attend any particular topic no fee shall be charged.</li>
+                <li>In case of rejoining practice fees is only charge(no other fees) shall be charged.</li>
+                <li>Maximum information shall be furnished from our Mo. App.</li>
+                <li>If any indiscipline/ misbehavior/ misconduct/ is found time and again he/she shall be terminated from the academy and no fees shall be refunded under any circumstances.</li>
+                <li>Keep this receipt counterfoil in future for further grievances/ complain</li>
+                <li>Fees is not transferable to any student .</li>
+            </ol>
+        </div>
+    </div>
 </body>
+
 </html>

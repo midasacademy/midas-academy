@@ -12,6 +12,10 @@
             color: #00000085;
         }
 
+        #left #links .link:nth-child(4) {
+            color: #00000085;
+        }
+
         #left #links .link:nth-child(5) {
             color: #000;
         }
@@ -24,44 +28,8 @@
 
 <body>
     <div id="main">
-        <div id="left">
-            <img src="../images/logo.png" alt="">
 
-            <div id="links">
-                <a class="link" href="/home">
-                    <i class="ri-home-5-fill"></i>
-                    Home
-                </a>
-                <a class="link" href="/add-stud">
-                    <i class="ri-user-add-fill"></i>
-                    New Student
-                </a>
-                <a class="link" href="https://forms.gle/gDBF8xdQdYRv6mJq7">
-                    <i class="ri-questionnaire-fill"></i>
-                    Enquiry Form
-                </a>
-                <a class="link" href="">
-                    <i class="ri-edit-fill"></i>
-                    Manage Student
-                </a>
-                <a class="link" href="/fee">
-                    <i class="ri-cash-line"></i>
-                    Fee Management
-                </a>
-                <a class="link" href="/course">
-                    <i class="ri-book-line"></i>
-                    Course Management
-                </a>
-            </div>
-
-            <div id="settings">
-                <a href="" id="set">
-                    <i class="ri-settings-3-fill"></i>
-                    Settings
-                </a>
-                <a id="log-out" href="/logout"><i class="ri-shut-down-line"></i>Logout</a>
-            </div>
-        </div>
+        <% include ./partials/nav.ejs %>
 
         <div id="right">
             <div style="display: flex; flex-direction: column;" class="dashboard">
@@ -73,9 +41,13 @@
                             <% users.forEach(function(user){ %>
                                 <option value="<%= user.name %>"><%= user.name %></option>
                             <% }) %>
-                        </select>
+                        </select> 
+                        <label for="search_student">or Search:</label>
+                        <input type="number" id="search_student" name="search_student">
+                        <hr style="margin: 20px; border: none;">
                         <label for="fee_amount">Fee Amount:</label>
                         <input type="number" id="fee_amount" name="fee_amount" required>
+                        <hr style="margin: 20px; border: none;">
                         <button type="submit">Submit</button>
                     </form>
                 </div>

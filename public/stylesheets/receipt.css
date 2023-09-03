@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Gilroy;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+#main{
+    width: 100%;
+    height: 100%;
+    /* background-color: blue; */
+}
+
+#main #header{
+    display: flex;
+    justify-content: space-between;
+}
+
+#main #logo{
+    width: 15vw;
+}
+
+#main #header h1{
+    text-align:end;
+    /* font-size: 6vw; */
+}
+
+#main #rec-dets{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+    text-align: center;
+}
+
+#main #rec-dets h4{
+    font-weight: 600;
+}
+
+#main #rec-dets h5{
+    font-weight: 400;
+}
+
+#main #stud-dets p{
+    margin-bottom: 5px;
+}
+
+#main #stud-dets #amount{
+    text-align: end;
+}
+
+#main #tnc h3{
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+}
+
+#main #tnc ol{
+    padding-left: 5vw;
+}

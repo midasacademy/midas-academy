@@ -19,7 +19,8 @@ var studentSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    due_fees: Number
+    due_fees: Number,
+    instalment: String
 })
 
 module.exports = mongoose.model("student", studentSchema);
